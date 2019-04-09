@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GifTastic Assignment </title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../Giphy/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Carrois+Gothic+SC" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body class="container">
+
+<div class="jumbotron" id="header">
+
+
+  
+  <div class="jumbotron" id="header">
+      <h1>See the Magic Of buttons !!!</h1>
+      <h4> <br>Click the GIPHYs to pause and play<br>Search to add more buttons !</h4>
+    </div>
+    </div>
+    
+<form class="form-inline" id="theSearch">
+  <div class="form-group">
+    <label for="topicInput">Search for a topic </label>
+    <input type="text" id="topicInput">
+  </div>
+  <!-- Button triggers topics to be added -->
+  <input id="addtopics" type="submit" value="submit">
+</form>
+
+<div class="row">
+  <div class="container">
+    <div class="btn-group inline pull-left">
+      <button class="btn btn-primary" id="topics" data-search="Alien Cows">Alien Cows</button>
+   
+      <button class="btn btn-primary" id="topics" data-search="Monkeys">Monkeys</button>
+      <button class="btn btn-primary" id="topics" data-search="Pig ">Piggy</button>
+      <button class="btn btn-primary" id="topics" data-search="Dog">Dog</button>
+      <button class="btn btn-primary" id="topics" data-search="Deer">Deer</button>
+      <button class="btn btn-primary" id="topics" data-search="Rabbit">Rabbit</button>
+      <button class="btn btn-primary" id="topics" data-search="Monkey">Monkey</button>
+      <button class="btn btn-primary" id="topics"data-search="Donkey">Donkey</button>
+      <button class="btn btn-primary" id="topics" data-search="Zebra">Zebra</button>
+      <button class="btn btn-primary" id="topics" data-search="elephent">elephent</button>
+      <button class="btn btn-primary" id="topics" data-search="Lion">Lion</button>
+      <button class="btn btn-primary" id="topics" data-search="Tiger">Tiger</button>
+      
+
+      <div id="myButtons"></div>
+    </div> <!--end of button group -->
+  </div> <!--end of container -->
+</div> <!--end of row -->
+
+
+<div class="row">
+  <div class="container">
+      <span><div id="gifArea"></div></span>
+  </div> <!--end of container -->
+</div> <!-- end of row  -->
+
+
+<script type="text/javascript" src="../Giphy/javascript/app.js"></script> 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</body>
+</html> 
