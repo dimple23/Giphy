@@ -1,88 +1,67 @@
-$(document).ready(function() {
-//Array for searched topics to be added
-var topics = [];
-
-	//Function with AJAX call to GIPHY; Q parameterc for API link set to search term, limit 10 results
-  //Create div with respective still and animate image sources with "data-state", "data-still" and "data-animate" attributes
- 	function display_topics() {
-
-	var x = $(this).data("search");
-	console.log(x);
-
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + x + "&api_key=e6OFIzIJm8CK6O6aiWItgKxH4bKZTzjB&limit=25&rating=R";
-
-	console.log(queryURL);
-
-	$.ajax({
-          url: queryURL,
-          method: "GET"
-        }).then(function(response) {
-        	var results = response.data;
-        	console.log(results);
-        	for (var i = 0; i < results.length; i++) {
-
-        	var topicsDiv = $("<div class='col-md-4'>");
-
-        	var rating = results[i].rating;
-        	var defaultAnimatedSrc = results[i].images.fixed_height.url;
-        	var staticSrc = results[i].images.fixed_height_still.url;
-        	var topicsImage = $("<img>");
-        	var p = $("<p>").text("Rating: " + rating);
-
-        	topicsImage.attr("src", staticSrc);
-        	topicsImage.addClass("_Giphy");
-        	topicsImage.attr("data-state", "still");
-        	topicsImage.attr("data-still", staticSrc);
-        	topicsImage.attr("data-animate", defaultAnimatedSrc);
-        	topicsDiv.append(p);
-        	topicsDiv.append(topicsImage);
-        	$("#gifArea").prepend(topicsDiv);
-
+$('document').ready(function () {
+    var cartoon = [
+        "Tweety","Minnie Mouse","Spiderman","Winnie the Phoo","Popeye","Tom-Jerry","Batman"
+               ];
+    function displayCartoon() {
+        for (var i = 0; i < cartoon.length; i++) {
+            $('#buttons').append('<div class="btn btn-info get-giphy" data-attribute=' + cartoon[i] + '>' + cartoon[i] + '</div>');
         }
-	});
-}
-
-  //Submit button click event takes search term from form input, trims and pushes to topics array, displays button
-	$("#addtopics").on("click", function(event) {
-        event.preventDefault();
-        var newtopics = $("#topicInput").val().trim();
-        topics.push(newtopics);
-        console.log(topics);
-        $("#topicInput").val('');
-        displayButtons();
-      });
-
-  //Function iterates through topics array to display button with array values in "myButtons" section of HTML
-	function displayButtons() {
-    $("#myButtons").empty();
-    for (var i = 0; i < topics.length; i++) {
-      var a = $('<button class="btn btn-primary">');
-      a.attr("id", "topics");
-      a.attr("data-search", topics[i]);
-      a.text(topics[i]);
-      $("#myButtons").append(a);
+       
     }
-  }
+    console.log(buttons);
+    displayCartoon();
+    $('#buttons').on('click', '.get-giphy', function () {
+        
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + $(this).data('attribute') + "&api_key=O2X0wRMnWEjylyUypx1F5UVxCz5Jp8kr&limit=10";
+        $.ajax({
+            'url': queryURL,
+            'method': 'GET'
+        }).then(function (response) {
+            var results = response.data;
+            console.log(results);
+            for (var i = 0; i < results.length; i++) {
+                if (results[i].rating !== "r") {
+                    var gifDiv = $("<div class='item'/>").prependTo("#gifs-appear-here");
+                                  $("<img class='cartoonImage '/>")
+                                  .attr
+                                  ({'src': results[i].images.fixed_height_still.url
+                                   })
+                                  .data({
+                                 'state': 'still',
+                                 'images': results[i].images
+                                  }).appendTo(gifDiv);
+                                  $('<p/>').text("Rating: " + results[i].rating).appendTo(gifDiv);
+                                
+                                
+                   
+                                }
+            }
+        });
+    });
+   
 
+    $('#gifs-appear-here').on('click', '.cartoonImage', function () {
+        var data = $(this).data();
+        if (data.state === 'still') {
+            $(this).attr('src', data.images.fixed_height.url);
+            data.state = 'animate';
+        } else {
+            $(this).attr('src', data.images.fixed_height_still.url);
+            data.state = 'still';
+        }
+    });
+    $('button[type="submit"]').click(function () {
+        var inputValue = $('.form-control').val().trim();
+            cartoon.push(inputValue);
+            $('#buttons').empty();
+            displayCartoon();
+        });
 
-  displayButtons();
-
-  //Click event on button with id of "topics" executes display_topics function
-  $(document).on("click", "#topics", display_topics);
-
-  //Click event on gifs with class of "_Giphy" executes pausePlayGifs function
-  $(document).on("click", "._Giphy", pausePlayGifs);
-
-  //Function accesses "data-state" attribute and depending on status, changes image source to "data-animate" or "data-still"
-  function pausePlayGifs() {
-  	 var state = $(this).attr("data-state");
-      if (state === "still") {
-        $(this).attr("src", $(this).attr("data-animate"));
-        $(this).attr("data-state", "animate");
-      } else {
-        $(this).attr("src", $(this).attr("data-still"));
-        $(this).attr("data-state", "still");
-  }
-}
-
+   
+    $('.form-control').keypress(function (e) {
+        if (e.which == 13) { 
+            $('button[type="submit"]').click(); 
+        }
+    });
+  
 });
